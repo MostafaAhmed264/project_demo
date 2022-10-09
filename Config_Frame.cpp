@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Config_Frame.h"
 using namespace std;
-#define Test_cases 0
 class Config_Frame{
     private:
         int size_Of_Frame;
@@ -29,16 +28,3 @@ class Config_Frame{
         this->enum_network_layer_protocol= enum_network_layer_protocol;
     }
 };
-#if(Test_case ==1)
-int main(){
-    Config_Frame c;
-    printf("%d %d %d\n",c.getSizeOfFrame(),c.getProtocolOfNetworkLayer(),c.getProtocolOfTransportLayer());
-    Config_Frame c1(100,TCP,IPv4);
-    printf("%d %d %d\n",c1.getSizeOfFrame(),c1.getProtocolOfNetworkLayer(),c1.getProtocolOfTransportLayer());
-    c1.setSizeOfFrame(1050);
-    c1.setProtocolOfNetworkLayer(IPv6);
-    c1.setProtocolOfTransportLayer(UDP);
-    printf("%d %d %d",c1.getSizeOfFrame(),c1.getProtocolOfNetworkLayer(),c1.getProtocolOfTransportLayer());
-    return 0;
-}
-#endif
