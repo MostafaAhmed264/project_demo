@@ -32,3 +32,5 @@ State Status :: get_state(){
 long long Status :: get_number_of_frames(){
     return this->number_of_frames; 
 }
+
+Status :: ~Status(){}

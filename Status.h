@@ -1,3 +1,6 @@
+#ifndef DATE_H
+#define DATE_H
+
 typedef enum{
     IDLE, ACTIVE 
 }State; 
@@ -23,3 +26,5 @@ class Status{
         void set_state(State s);
         void set_number_of_frames (long long n);
 }; 
+
+#endif
