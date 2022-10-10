@@ -1,4 +1,7 @@
-#pragma once
+
+#ifndef COMMON_DEFINATION_H
+#define COMMON_DEFINATION_H
+
 typedef enum {
 	TCP,
 	UDP
@@ -13,3 +16,5 @@ typedef enum {
 	IDLE,
 	ACTIVE
 }State;
+
+#endif
