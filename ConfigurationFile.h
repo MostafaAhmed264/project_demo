@@ -1,9 +1,7 @@
-#pragma once
+#ifndef	  CONFIGURATIONFILE_
+#define   CONFIGURATIONFILE_
 #include <string>
-typedef enum {
-	TCP,
-	UDP
-}TransLayerProt_type;
+#include "Common_Defination.h"
 
 
 typedef struct {
@@ -11,9 +9,17 @@ typedef struct {
 	std::string IP_Adress;
 }Destination;
 
+typedef enum {
+	START , 
+	END 
+}Command_type;
+
 typedef struct {
-	int			frameSize;
-	TransLayerProt_type transnportLayerProtocol;
-	int			time;
-	Destination destination;
+	Command_type				command				    ;
+	int							frameSize               ;
+	TransportLayerProtocol_type transnportLayerProtocol ;
+	int							time				    ;
+	Destination					destination             ;
 }Configuration;
+
+#endif
