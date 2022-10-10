@@ -15,11 +15,11 @@ typedef enum {
 }Command_type;
 
 typedef struct {
-	Command_type				command				    ;
+	Command_type						command		        ;
 	int							frameSize               ;
-	TransportLayerProtocol_type transnportLayerProtocol ;
-	int							time				    ;
-	Destination					destination             ;
+	TransportLayerProtocol_type 				transnportLayerProtocol ;
+	int							time		        ;
+	Destination						destination             ;
 }Configuration;
 
 #endif
