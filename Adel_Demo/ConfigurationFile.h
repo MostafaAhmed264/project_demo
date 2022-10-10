@@ -15,7 +15,7 @@ typedef enum {
 }Command_type;
 
 typedef struct {
-	Command_type						commandB3bos		        ;
+	Command_type						command		        ;
 	int							frameSize               ;
 	TransportLayerProtocol_type 				transnportLayerProtocol ;
 	int							time		        ;
