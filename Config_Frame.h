@@ -13,6 +13,8 @@ class Config_Frame{
         int size_Of_Frame;
         TransportLayerProtocol enum_transport_layer_protocol;
         NetworkLayerProtocol   enum_network_layer_protocol;
+        unsigned int IP_address;
+        char*        Mac_address;
     public:
     Config_Frame();
     Config_Frame(int size,TransportLayerProtocol enum_transport_layer_protocol,NetworkLayerProtocol enum_network_layer_protocol);
