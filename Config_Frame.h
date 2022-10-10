@@ -30,5 +30,13 @@ class Config_Frame{
     void setProtocolOfTransportLayer(TransportLayerProtocol enum_transport_layer_protocol);
     /*change used network layer protocal in frame*/
     void setProtocolOfNetworkLayer(NetworkLayerProtocol enum_network_layer_protocol);
+    /*return IP Address*/
+    unsigned int getIPAdress(void);
+    /*set IP Address*/
+    void setIPAdress( unsigned int);
+     /*return MAC Address*/
+    char * getMACAdress();
+    /*set MAC Address*/
+    void   setMACAdress(char*);
 };
 #endif
