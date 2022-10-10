@@ -5,7 +5,8 @@ typedef enum {
 }TransportLayerProtocol_type;
 
 typedef enum {
-	IPv4, IPv6
+	IPv4,
+	IPv6
 }NetworkLayerProtocol;
 
 typedef enum {
