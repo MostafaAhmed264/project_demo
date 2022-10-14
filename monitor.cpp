@@ -14,4 +14,5 @@ PC_Monitor monitor_pc(Status s,Frame * sent_Frames , Frame * received_Frames)
     
     // getting the size of each frame received by the PC 
     m.frames_Received = received_Frames;
+    return m;
 }

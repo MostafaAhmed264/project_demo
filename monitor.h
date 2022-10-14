@@ -31,5 +31,9 @@ typedef struct
 /************************************************************************************
  *                                  Functions
 **************************************************************************************/
-PC_Monitor monitor_pc();
+/*Description:
+ * This function returns a struct containing the state of the pc , 
+   no of sent & received frames , pointer to array containing frames' number and size
+ */
+PC_Monitor monitor_pc(Status s,Frame * sent_Frames , Frame * received_Frames);
 
