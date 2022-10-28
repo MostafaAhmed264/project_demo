@@ -14,3 +14,4 @@ void callback_func(u_char* userarg, const struct pcap_pkthdr* pkthdr, const u_ch
 void read_packets(int num_of_packets);
 void stop_receive();
 void destroy_session(void);
+long get_time_recieve(void);

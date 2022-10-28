@@ -1,4 +1,3 @@
-
 #include <stdint.h>
 #include <stdio.h>
 #include <linux/ip.h>
@@ -6,6 +5,11 @@
 #include <linux/tcp.h>
 #include "receive_frame.h"
 #include <netinet/if_ether.h>
+long long time1_sec = 0;
+long long time1_usec = 0;  
+long long time2_sec = 0;
+long long time2_usec = 0;  
+
 char errbuff[PCAP_ERRBUF_SIZE];
 char* interface_name;
 pcap_t* handler;
@@ -69,10 +73,23 @@ without returning a packet so it need a function to process them while looping s
 responsible for processing each packet*/
 void callback_func(u_char* userarg, const struct pcap_pkthdr* pkthdr, const u_char*packet)
 {
+
     printf("-----------------------------------------------------------------------\n");
     static uint32_t count =0;
+    if (count == 0)
+    {
+        time1_sec = pkthdr->ts.tv_sec; 
+        time1_usec = pkthdr->ts.tv_usec; 
+    }
+    else 
+    {
+        time2_sec = pkthdr->ts.tv_sec; 
+        time2_usec = pkthdr->ts.tv_usec; 
+    }
+
     printf("Packet no. %u\n",count);
     printf("Recieved at %li\n", pkthdr->ts.tv_sec);
+    printf("Recieved at microsecond: %li\n", pkthdr->ts.tv_usec);
     printf("Lengh of information captured: %u\n",pkthdr->caplen);
     printf("Lengh of total packet: %u\n",pkthdr->len);
     //capture ethernet header
@@ -143,6 +160,15 @@ void callback_func(u_char* userarg, const struct pcap_pkthdr* pkthdr, const u_ch
 }
 
 
+long get_time_recieve(void){
+    printf("%lld\n", time1_sec); 
+    printf("%lld\n", time1_usec); 
+    printf("%lld\n", time2_sec); 
+    printf("%lld\n", time2_usec); 
+    printf("diff in sec = %lld\n", time2_sec - time1_sec); 
+    printf("diff in u_sec = %lld\n", time2_usec - time1_usec); 
+    return 0; 
+}
 
 /*This function read packets according to filter ,if no filter ,all kind of packets will be captured ,it calls
 the libpcap function pcap_loop which keeps reading packets and apply the callback fucntion to each of them until

@@ -1,5 +1,7 @@
 #ifndef CONFIG_FRAME_H
 #define CONFIG_FRAME_H
+#include <string>
+using std::string;
 /*tranport layer configuration values*/
 typedef enum{
     UDP,TCP
@@ -13,9 +15,11 @@ class Config_Frame{
         int size_Of_Frame;
         TransportLayerProtocol enum_transport_layer_protocol;
         NetworkLayerProtocol   enum_network_layer_protocol;
-        unsigned int IP_address;
-        char*        Mac_address;
+        
     public:
+    const uint8_t* Dest_Mac_Address;
+    char* Dest_ip_address; 
+    int dest_port; 
     Config_Frame();
     Config_Frame(int size,TransportLayerProtocol enum_transport_layer_protocol,NetworkLayerProtocol enum_network_layer_protocol);
     /*return used size of frame*/
@@ -30,13 +34,6 @@ class Config_Frame{
     void setProtocolOfTransportLayer(TransportLayerProtocol enum_transport_layer_protocol);
     /*change used network layer protocal in frame*/
     void setProtocolOfNetworkLayer(NetworkLayerProtocol enum_network_layer_protocol);
-    /*return IP Address*/
-    unsigned int getIPAdress(void);
-    /*set IP Address*/
-    void setIPAdress( unsigned int);
-     /*return MAC Address*/
-    char * getMACAdress();
-    /*set MAC Address*/
-    void   setMACAdress(char*);
+    
 };
 #endif

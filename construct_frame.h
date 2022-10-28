@@ -14,11 +14,10 @@
 #define LINK_LAYER_PACKET LIBNET_LINK
 #define NETWORK_LAYER_IPV4_PACKET LIBNET_RAW4 
 #define NETWORK_LAYER_IPV6_PACKET LIBNET_RAW6
-extern libnet_t * context_ptr;
+//extern libnet_t * context_ptr;
 extern uint64_t total_num_bytes_sent;
-void initialize_libnet(int socket_type);
-void construct_frame(Config_Frame* c_ptr);
-void send_frame();
-void destroy_libnet_context();
+void construct_frame(Config_Frame* c_ptr,  libnet_t** context_ptr);
+void send_frame(libnet_t** context_ptr);
+void destroy_libnet_context( libnet_t** context_ptr);
 
 
