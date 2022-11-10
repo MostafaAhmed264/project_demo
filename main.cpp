@@ -1,9 +1,11 @@
 #include <iostream>
 #include <string>
+#include <omp.h>
+using namespace std;
 using std::string;
 #include "Config_Frame.h"
 #include "construct_frame.h"
-
+#include <thread>
 int main(void)
 {
     int counter = 0;
@@ -15,29 +17,32 @@ int main(void)
     std::cout<<"configured frame"<<std::endl;
 
     c1.Dest_ip_address = "192.168.1.9";
-    c1.Dest_Mac_Address =(const uint8_t*)"96:E2:3C:E7:0F:DB";
+    c1.Dest_Mac_Address =(const uint8_t*)"3C:2C:30:9B:3B:90";
     c1.dest_port = 777; 
 
     c2.Dest_ip_address = "192.168.1.9";
-    c2.Dest_Mac_Address =(const uint8_t*)"96:E2:3C:E7:0F:DB";
+    c2.Dest_Mac_Address =(const uint8_t*)"3C:2C:30:9B:3B:90";
     c2.dest_port = 777; 
 
     std::cout<<"libnet initalized"<<std::endl;
+    
     construct_frame(&c1,&context_ptr1);
     construct_frame(&c2,&context_ptr2);
 
     int flag = 0; 
-    while(1)
+    while(counter < 20000)
     {
         if (flag == 0)
         {
-            std::cout<<"constructed frame"<<std::endl;
+            modifiy_payload(&context_ptr1, &c1); 
+            //std::cout<<"constructed frame"<<std::endl;
             send_frame(&context_ptr1);
             flag = 1; 
         }
         else 
         {
-            std::cout<<"constructed frame"<<std::endl;
+            modifiy_payload(&context_ptr2, &c2);
+            //std::cout<<"constructed frame"<<std::endl;
             send_frame(&context_ptr2);
             flag = 0; 
         }

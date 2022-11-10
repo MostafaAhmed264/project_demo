@@ -19,5 +19,6 @@ extern uint64_t total_num_bytes_sent;
 void construct_frame(Config_Frame* c_ptr,  libnet_t** context_ptr);
 void send_frame(libnet_t** context_ptr);
 void destroy_libnet_context( libnet_t** context_ptr);
+void modifiy_payload(libnet_t** context_ptr, Config_Frame* c_ptr);
 
 
