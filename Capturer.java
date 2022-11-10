@@ -30,7 +30,7 @@ public class Capturer implements Runnable
 
     public void run()
     {
-        System.out.println("Hello world!");
+
         this.libpcap_init();
         try
         {
@@ -50,9 +50,10 @@ public class Capturer implements Runnable
                 {
                     continue;
                 }
-                System.out.println("Packet number:" + (count+1));
+                //System.out.println(Thread.currentThread());
+                //System.out.println("Packet number:" + (count+1));
+
                 // if we want to get packet as bytes simply call packet.getRawData
-                System.out.println(packet);
                 if (count == 0)
                 {
                     firstRecievedPacket = packet;
