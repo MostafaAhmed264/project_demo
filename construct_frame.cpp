@@ -6,13 +6,27 @@ uint64_t total_num_bytes_sent =0;
 uint64_t num_frames_sent;
 char errormsg[200];
 
+
+
+void modifiy_payload(libnet_t** context_ptr, Config_Frame* c_ptr)
+{
+    uint32_t payload_size = c_ptr->getSizeOfFrame() -(UDP_HEADER_SIZE+ ETHERNET_HEADER_SIZE +IPV4_HEADER_SIZE);
+    uint8_t* ptr = (uint8_t*)malloc(sizeof(char)*payload_size);
+    uint64_t* ptr2 = (uint64_t *) ptr;
+    memset(ptr,0,payload_size);
+    *ptr2 = htonl((uint32_t)num_frames_sent); 
+    libnet_ptag_t ptag_payload = libnet_build_data(ptr,payload_size,*context_ptr,1);
+}
 void construct_frame(Config_Frame* c_ptr, libnet_t** context_ptr)
 {
     *context_ptr = libnet_init(LINK_LAYER_PACKET,NULL,errormsg);
     /*add payload of any charachter (dummy frame)*/
     uint32_t payload_size = c_ptr->getSizeOfFrame() -(UDP_HEADER_SIZE+ ETHERNET_HEADER_SIZE +IPV4_HEADER_SIZE);
     uint8_t* ptr = (uint8_t*)malloc(sizeof(char)*payload_size);
-    memset(ptr,'m',payload_size);
+    uint64_t* ptr2 = (uint64_t *) ptr;
+    memset(ptr,0,payload_size);
+    *ptr2 = num_frames_sent; 
+    *ptr = 'a'; 
     libnet_ptag_t ptag_payload = libnet_build_data(ptr,payload_size,*context_ptr,0);
      
 
@@ -61,10 +75,14 @@ void construct_frame(Config_Frame* c_ptr, libnet_t** context_ptr)
 }
 void send_frame(libnet_t** context_ptr)
 {
-    uint32_t num_bytes_sent = libnet_write(*context_ptr);
-    total_num_bytes_sent+=num_bytes_sent;
-    std::cout<<"frame number:" <<num_frames_sent<<"     bytes sent:" <<num_bytes_sent;
-    num_frames_sent++;
+    #pragma omp parallel for 
+        for (int i = 0;i  < 10000; ++i)
+        {
+            uint32_t num_bytes_sent = libnet_write(*context_ptr);
+            total_num_bytes_sent+=num_bytes_sent;
+            //std::cout<<"frame number:" <<num_frames_sent<<"     bytes sent:" <<num_bytes_sent;
+            num_frames_sent++;
+        }
 }
 void destroy_libnet_context(libnet_t** context_ptr)
 {
