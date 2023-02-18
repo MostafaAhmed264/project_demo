@@ -1,9 +1,14 @@
 package Phase0;
+/**
+ *This class represents a single machine in a network of machines that can receive commands from a master node through
+ *Kafka messaging. The machine can operate in sender mode, where it sends packets to a specified destination and at a specified rate.
+ *The class uses a Kafka consumer to receive commands from a topic and processes the commands based on the machine ID.
+ */
 
 import Phase0.commands.MachineCommand;
 import Phase0.kafka.GenericConsumer;
-import Phase0.network.PacketGenerator;
-import Phase0.network.RateController;
+import Phase0.kafka.Topics;
+import Phase0.network.*;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.pcap4j.core.NotOpenException;
@@ -11,6 +16,10 @@ import org.pcap4j.core.PcapNativeException;
 
 import java.net.UnknownHostException;
 
+/**
+ * The main functionality of the SingleMachine class. It starts a thread to consume Kafka messages from a topic and
+ * process them using the ContinuousConsume method.
+ */
 public class SingleMachine {
     static int   machineId = 0;
     public static void main(String[] args) {
@@ -22,20 +31,24 @@ public class SingleMachine {
 
 
     }
+    /**
+     * This method uses a Kafka consumer to continuously consume messages from a specified topic and processes them
+     * based on the machine ID. It deserializes the JSON message to a MachineCommand object, and starts a new thread to
+     * send packets if the command mode is "Sender" and the machine ID matches the current machine.
+     */
     static void ContinuousConsume()
     {
-        GenericConsumer consumer = new GenericConsumer("192.168.1.3:9093","0");
-        consumer.selectTopic("CMD_FromHPC_Master");
+        GenericConsumer consumer = new GenericConsumer(IP.singleMachine1Ip + ":" + Ports.singleMachine1Ip,"0");
+        consumer.selectTopic(Topics.cmdFromHpcMaster);
         while(true)
         {
-            ConsumerRecords<String, String> records =consumer.consume(1000);
+            ConsumerRecords<String, String> records =consumer.consume(Time.waitTime);
 
             for (ConsumerRecord<String, String> record : records) {
                 String json = record.value();
                 MachineCommand command = JSONConverter.fromJSON(json, MachineCommand.class);
                 if(command.getMachineID() == machineId)
                 {
-                    //stub for sending packets
                     Thread t1 = new Thread(() -> {
                         try {
                             handleCommand(command);
@@ -49,15 +62,18 @@ public class SingleMachine {
 
         }
     }
+    /**
+     * This method handles a MachineCommand object by setting the sending rate and starting a new thread to send packets
+     * to a specified destination.
+     */
     static void  handleCommand(MachineCommand command) throws Exception {
 
         if (command.getMode().equals("Sender"))
         {
-            /*
-                set sending rate
-             */
+            // Set the sending rate
             System.out.println(command.getRates());
-            RateController.setRate("enp37s0", Integer.toString((int)command.getRates()),"100" );
+            // warning previously used was enp37s0
+            RateController.setRate(GlobalVariable.interfaceName, Integer.toString((int)command.getRates()),Rates.machine1Rate );
 
 
             /*
@@ -66,7 +82,7 @@ public class SingleMachine {
              */
             Thread t1 = new Thread(() -> {
                 try {
-                    PacketGenerator.send("192.168.1.2", "3C:2C:30:9B:3B:90", command.getPackets());
+                    PacketGenerator.send(IP.receiverOfPackets, MacAddresses.Mac1, command.getPackets());
                 } catch (PcapNativeException e) {
                     throw new RuntimeException(e);
                 } catch (NotOpenException e) {
