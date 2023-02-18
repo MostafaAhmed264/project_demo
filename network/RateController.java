@@ -1,6 +1,6 @@
 package Phase0.network;
 
-import Phase0.GlobalVariable;
+import Phase0.miscellaneous.GlobalVariable;
 
 public class RateController
 {
@@ -29,6 +29,6 @@ public class RateController
     }
 
     public static void test() throws Exception {
-        setRate("enp37s0", "10000", "10");
+        setRate(GlobalVariable.interfaceName, "10000", "10");
     }
 }

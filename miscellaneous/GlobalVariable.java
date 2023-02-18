@@ -1,4 +1,4 @@
-package Phase0;
+package Phase0.miscellaneous;
 
 public class GlobalVariable {
     public static String interfaceName = "enp2s0";

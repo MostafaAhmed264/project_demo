@@ -1,4 +1,4 @@
-package Phase0;
+package Phase0.miscellaneous;
 
 public class Time {
     // this variable will hold the wait time for the kafka consumer
