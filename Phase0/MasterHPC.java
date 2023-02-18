@@ -135,7 +135,6 @@ public class MasterHPC {
             String json = JSONConverter.toJSON(myHPC);
             producer.send(Topics.ratesFromHPCs, json);
 
-
         }
 
     }
