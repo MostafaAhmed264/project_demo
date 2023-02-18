@@ -4,7 +4,7 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.Random;
 
-import Phase0.GlobalVariable;
+import Phase0.miscellaneous.GlobalVariable;
 import org.pcap4j.core.NotOpenException;
 import org.pcap4j.core.PcapHandle;
 import org.pcap4j.core.PcapNativeException;

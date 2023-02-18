@@ -1,8 +1,8 @@
 package Phase0.network;
 
 
-import Phase0.GlobalVariable;
-import Phase0.JSONConverter;
+import Phase0.miscellaneous.GlobalVariable;
+import Phase0.miscellaneous.JSONConverter;
 import Phase0.machinesInfo.MachineInfo;
 import Phase0.kafka.GenericProducer;
 

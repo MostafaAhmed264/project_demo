@@ -3,6 +3,7 @@ package Phase0;
 import Phase0.commands.Command;
 import Phase0.kafka.GenericProducer;
 import Phase0.kafka.Topics;
+import Phase0.miscellaneous.JSONConverter;
 import Phase0.network.IP;
 import Phase0.network.Ports;
 
