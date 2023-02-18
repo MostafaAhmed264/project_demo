@@ -1,6 +1,7 @@
 package Phase0.network;
 
 
+import Phase0.kafka.Topics;
 import Phase0.miscellaneous.GlobalVariable;
 import Phase0.miscellaneous.JSONConverter;
 import Phase0.machinesInfo.MachineInfo;
@@ -48,7 +49,7 @@ class Observer {
 
     public static void observe()
     {
-        GenericProducer producer = new GenericProducer("localhost:9092");
+        GenericProducer producer = new GenericProducer(IP.ip1 + ":" + Ports.port1);
         MachineInfo machine=new MachineInfo(0,0);
         while (true)
         {
@@ -58,7 +59,7 @@ class Observer {
 
             machine.setRate((sendRate[0] * 8F)/1024);
             String json = JSONConverter.toJSON(machine);
-            producer.send("RatesFromMachines",json);
+            producer.send(Topics.ratesFromMachines,json);
 
             System.out.print((sendRate[0] * 8.0)/1024);
             System.out.println(" "+(recRate[0] * 8.0) / 1024);
